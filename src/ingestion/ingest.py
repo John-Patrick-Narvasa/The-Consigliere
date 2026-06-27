@@ -100,11 +100,11 @@ def upload_book_in_stateful_batches(pdf_path: str, book_title: str, pages_per_ru
                 success = True # Breaks the loop on success
             except ClientError as ce:
                 if ce.code == 429:
-                    err_msg = str(ce.message) if hasattr(ce, 'message') else str(ce)
+                    # FIX: Safely parse the entire exception string to catch deep dict keys
+                    full_error_string = str(ce).lower()
                     
-                    # FIX: Exit cleanly if the daily threshold is met
-                    if "day" in err_msg.lower() or "perday" in err_msg.lower():
-                        print("\n🛑 DAILY CAP REACHED: You have exhausted Gemini's 1,000 free daily requests.")
+                    if "day" in full_error_string or "perday" in full_error_string:
+                        print("\n🛑 DAILY CAP DETECTED: You have officially exhausted Gemini's 1,000 free daily requests.")
                         print(f"💾 Checkpoint safely preserved at page {book_state['last_processed_page']}. Exiting gracefully...")
                         exit(0)
                         
