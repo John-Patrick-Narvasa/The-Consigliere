@@ -1,3 +1,6 @@
 .env
 venv
 scripts.txt
+__pycache__
+Recap.md
+Reference_codes.md

@@ -6,5 +6,5 @@ pymupdf
 langchain-core
 langchain-google-genai
 langgraph
-pinecone-client
+pinecone
 streamlit
