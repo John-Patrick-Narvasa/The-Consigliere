@@ -7,9 +7,16 @@ BOOK_PATHS = [
     "data/Building a Second Brain By Tiago Forte-pdfread.net.pdf", 
     "data/Ego is the Enenmy ( PDFDrive ).pdf", 
     "data/Robert Greene, Joost Elffers - The 48 laws of power-Profile Books (2000).pdf", 
-    "data/The Holy Bible (KJV).pdf"
+    "data/The Holy Bible (KJV).pdf",
+    "data/Atomic Habits by James Clear.pdf.pdf"
 ]
-BOOKS = ["The Art of War", "Building a Second Brain", "Ego is the Enemy", "The 48 laws of power", "The Holy Bible (KJV)"]
+BOOKS = ["The Art of War", 
+         "Building a Second Brain", 
+         "Ego is the Enemy", 
+         "The 48 laws of power", 
+         "The Holy Bible (KJV)", 
+         "Atomic Habits"
+]
 
 CROSS_BOOK_QUERIES = [
     "Give me strategies combining the deceptive arts of war with managing a person's pride and public presence.",

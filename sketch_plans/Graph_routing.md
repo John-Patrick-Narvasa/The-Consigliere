@@ -1,14 +1,10 @@
-
-
 ```
-			   [START]
-                  │
-                  ▼
-       ┌─────────────────────┐
-       │  retrieve_context   │ ◄── Hits Pinecone using query embedding
-       └──────────┬──────────┘
-                  │
-                  ▼
+[START] ──► [retrieve_context]
+	                 │
+                     ▼
+            [classify_intent_node] (Saves state["intent"])
+                     │
+                     ▼ (Conditional Edge reads state["intent"])
        ┌─────────────────────┐
        │   route_by_intent   │ ◄── Conditional routing edge (LLM Decision)
        └─┬────────┬────────┬─┘

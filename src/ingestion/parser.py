@@ -49,9 +49,10 @@ def run_parser_test(pdf_path: str, book_title: str):
     """Isolated extraction tester metric"""
     print("\n=== RUNNING ISOLATED PARSER METRIC TEST ===")
     try:
-        chunks = extract_and_chunk_pdf(pdf_path, book_title, words_per_chunk=150)
-        assert len(chunks) > 0, "Parser test failed: No text fragments generated."
-        print(f" ✅ PARSER TEST PASSED. Sample Chunk Metadata: {chunks[0]['metadata']}")
+        # Fix: Unpack the tuple properly to separate the chunk list from the end page int
+        chunks_list, _ = extract_and_chunk_pdf(pdf_path, book_title, words_per_chunk=150)
+        assert len(chunks_list) > 0, "Parser test failed: No text fragments generated."
+        print(f" ✅ PARSER TEST PASSED. Sample Chunk Metadata: {chunks_list[0]['metadata']}")
         return True
     except Exception as e:
         print(f" ❌ PARSER TEST FAILED: {str(e)}")

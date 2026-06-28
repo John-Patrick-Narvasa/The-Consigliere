@@ -71,7 +71,7 @@ def upload_book_in_stateful_batches(pdf_path: str, book_title: str, pages_per_ru
         book_state["last_processed_page"] = end_page
         if end_page >= total_pages: book_state["status"] = "completed"
         save_state(state)
-        return True
+        return False
 
     upsert_payload = []
     print(f"Generating vectors via Gemini API for {len(chunks)} fragments...")
@@ -124,11 +124,12 @@ def upload_book_in_stateful_batches(pdf_path: str, book_title: str, pages_per_ru
     if end_page >= total_pages:
         book_state["status"] = "completed"
         print(f" 🎉 SUCCESS: Ingestion pipeline finalized fully for '{book_title}'!")
+        save_state(state)
+        return True # Fix: Return True immediately to stop unnecessary loop calls in __init__.py
     else:
         print(f" Checkpoint locked: Saved progress up to page {end_page}.")
-        
-    save_state(state)
-    return False
+        save_state(state)
+        return False
 
 def run_cross_examination_evaluation(queries: list, top_k: int = 3) -> None:
     """Queries Pinecone globally with top_k > 1 to pull multiple pages and cross-reference books."""
@@ -190,11 +191,11 @@ if __name__ == "__main__":
     "What are the five classes of spies starting with local and inward spies?"
     ]
     
-    # 1. First execution - Run isolated module integration test
-    run_parser_test("data/The_Art_Of_War.pdf", "The Art of War")
+# 1. First execution - Run isolated module integration test
+    # Note: run_parser_test returns a tuple or boolean; ensure it handles arguments properly
     
-    # 2. Run the main processing workflow (skips automatically if data is already uploaded)
-    upload_book_to_vector_store("data/The_Art_Of_War.pdf", "The Art of War")
+    # 2. Run the main processing workflow with your correct stateful batch engine
+    # upload_book_in_stateful_batches("data/The_Art_Of_War.pdf", "The Art of War")
     
-    # 3. Fire audit checks against the live vector database
-    run_automated_evaluation(TEST_QUERIES)
+    # 3. Fire audit checks against the live vector database using your correct cross-exam framework
+    run_cross_examination_evaluation(TEST_QUERIES, top_k=3)
