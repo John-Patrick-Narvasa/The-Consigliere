@@ -3,6 +3,9 @@ import re
 import os
 import fitz  # PyMuPDF
 
+fitz.TOOLS.mupdf_display_errors(False)
+fitz.TOOLS.mupdf_display_warnings(False)
+
 def extract_and_chunk_pdf(pdf_path: str, book_title: str, start_page: int = 1, max_pages_to_process: int = 20, words_per_chunk: int = 150) -> tuple[list[dict], int]:
     """
     Parses a segment of a PDF text layout page-by-page starting from start_page.
@@ -49,7 +52,6 @@ def run_parser_test(pdf_path: str, book_title: str):
     """Isolated extraction tester metric"""
     print("\n=== RUNNING ISOLATED PARSER METRIC TEST ===")
     try:
-        # Fix: Unpack the tuple properly to separate the chunk list from the end page int
         chunks_list, _ = extract_and_chunk_pdf(pdf_path, book_title, words_per_chunk=150)
         assert len(chunks_list) > 0, "Parser test failed: No text fragments generated."
         print(f" ✅ PARSER TEST PASSED. Sample Chunk Metadata: {chunks_list[0]['metadata']}")
@@ -57,3 +59,13 @@ def run_parser_test(pdf_path: str, book_title: str):
     except Exception as e:
         print(f" ❌ PARSER TEST FAILED: {str(e)}")
         return False
+    
+if __name__ == "__main__":
+    run_parser_test("data/The_Art_Of_War.pdf", "The Art of War")
+    run_parser_test("data/Building a Second Brain By Tiago Forte-pdfread.net.pdf", "Building a Second Brain")
+    run_parser_test("data/Ego is the Enenmy ( PDFDrive ).pdf", "Ego is the Enemy")
+    run_parser_test("data/Robert Greene, Joost Elffers - The 48 laws of power-Profile Books (2000).pdf", "The 48 laws of power")
+    run_parser_test("data/The Holy Bible (KJV).pdf", "The Holy Bible")
+    run_parser_test("data/Atomic Habits by James Clear.pdf.pdf", "Atomic Habits")
+
+    # TO RUN: python -m src.ingestion.parser

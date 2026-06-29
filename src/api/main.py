@@ -5,6 +5,7 @@ from langchain_core.messages import HumanMessage
 
 # Import live compiled graph orchestration framework
 from src.agent.graph import compiled_graph
+from fastapi.concurrency import run_in_threadpool
 
 app = FastAPI(
     title="The Consigliere API", 
@@ -37,7 +38,7 @@ async def chat_with_consigliere(payload: ChatRequest):
             "messages": [HumanMessage(content=payload.message)]
         }
     
-        final_state = compiled_graph.invoke(initial_state, config)
+        final_state = await run_in_threadpool(compiled_graph.invoke, initial_state, config)
     
         output_message = final_state["messages"][-1].content
         

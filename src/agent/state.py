@@ -9,9 +9,6 @@ class AgentState(TypedDict):
     """
     # Tracks entire multi-turn conversation thread seamlessly
     messages: Annotated[List[AnyMessage], add_messages]
-    
     # Stores raw structural source text data fetched during execution
     context: List[dict]
-    
-    # Stores the dynamically detected target pathway
     intent: str

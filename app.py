@@ -119,7 +119,7 @@ if user_prompt := st.chat_input("Submit tactical situational queries..."):
         }
         
         try:
-            network_response = requests.post(CHAT_ENDPOINT, json=payload, timeout=60)
+            network_response = requests.post(CHAT_ENDPOINT, json=payload, timeout=120)
             status_notification.empty()  # Wipe out the temporary loading status banner
             
             if network_response.status_code == 200:

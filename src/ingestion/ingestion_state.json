@@ -5,8 +5,18 @@
         "status": "completed"
     },
     "Building a Second Brain": {
-        "last_processed_page": 165,
+        "last_processed_page": 237,
         "total_pages": 237,
+        "status": "completed"
+    },
+    "Ego is the Enemy": {
+        "last_processed_page": 168,
+        "total_pages": 168,
+        "status": "completed"
+    },
+    "The 48 laws of power": {
+        "last_processed_page": 495,
+        "total_pages": 572,
         "status": "pending"
     }
 }
